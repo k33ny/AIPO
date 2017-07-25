@@ -292,7 +292,8 @@ public class DesignMachine {
         toPlay.handleResult();
         //toPlay.printResult();
 
-        return toPlay.getFullResult();
+        double[] result = toPlay.getFullResult();
+        return result;
     }
 
     /**

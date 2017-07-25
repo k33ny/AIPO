@@ -66,6 +66,9 @@ private void Log(String str) {log.log(str);}
         System.out.println("Evaluating agents...");
         List<AgentWrap> agents = PROFILE.getAgents();
         int trials = PROFILE.agentEvaluationTrials;
+        Individual[] samples = new Individual[trials];
+        for (int i = 0; i < trials; i++)
+            samples[i] = new Individual();
 
         double topStr = 0;
         for (int a = 0; a < agents.size(); a++)
@@ -73,12 +76,7 @@ private void Log(String str) {log.log(str);}
             AgentWrap agent = agents.get(a);
             double performances[] = new double[trials];
             for (int t = 0; t < trials; t++)
-            {
-                Individual ind = new Individual();
-                performances[t] = PROFILE.fit(runSimulation(ind.GENES, ind.validateLevel(t), agent));
-                double proggress = 100*(a)/agents.size();
-                double delta = 100*(a+1)/agents.size() - 100*(a)/agents.size();
-            }
+                performances[t] = PROFILE.fit(runSimulation(samples[t].GENES, samples[t].validateLevel(t), agent));
 
             for(double p : performances) agent.strength += p;
             agent.strength = agent.strength/performances.length;

@@ -1,3 +1,4 @@
+import MaastCTS.Agent;
 import core.competition.CompetitionParameters;
 
 /**
@@ -13,7 +14,7 @@ public class TestEvolution
     public static Integer agentEvaluationTrials = null;
     public static String game = "aliens";
     public static Boolean iterateThroughLevels = null;
-    public static Boolean showVisuals = null;
+    public static Boolean showVisuals = true;
 
     public static void main(String[] args)
     {
@@ -75,19 +76,23 @@ public class TestEvolution
 
     private static void addAgents(EvolutionProfile profile)
     {
-        //region Available agents
-        AgentWrap sampleRandomController = new AgentWrap("sampleRandom", "tracks.singlePlayer.simple.sampleRandom.Agent");
+//region Available agents
+    //region Sample agents
+        AgentWrap sampleRandomController = new AgentWrap("sampleRandom", "tracks.singlePlayer.simple.sampleRandom.Agent", 0, 0, 15, 0);
         AgentWrap doNothingController = new AgentWrap("doNothing", "tracks.singlePlayer.simple.doNothing.Agent");
-        AgentWrap sampleOneStepController = new AgentWrap("sampleonesteplookahead", "tracks.singlePlayer.simple.sampleonesteplookahead.Agent");
-        AgentWrap sampleMCTSController = new AgentWrap("sampleMCTS", "tracks.singlePlayer.deprecated.sampleMCTS.Agent");
+        AgentWrap sampleOneStepController = new AgentWrap("sampleonesteplookahead", "tracks.singlePlayer.simple.sampleonesteplookahead.Agent", 21, 4, 21, 0);
+        AgentWrap sampleMCTSController = new AgentWrap("sampleMCTS", "tracks.singlePlayer.deprecated.sampleMCTS.Agent", 16, 25, 51, 0);
         AgentWrap sampleFlatMCTSController = new AgentWrap("greedyTreeSearch", "tracks.singlePlayer.simple.greedyTreeSearch.Agent");
-        AgentWrap sampleOLMCTSController = new AgentWrap("sampleMCTS", "tracks.singlePlayer.advanced.sampleMCTS.Agent");
-        AgentWrap sampleGAController = new AgentWrap("sampleGA", "tracks.singlePlayer.deprecated.sampleGA.Agent");
+        AgentWrap sampleOLMCTSController = new AgentWrap("sampleMCTS", "tracks.singlePlayer.advanced.sampleMCTS.Agent", 14, 28, 51, 0);
+        AgentWrap sampleGAController = new AgentWrap("sampleGA", "tracks.singlePlayer.deprecated.sampleGA.Agent", 17, 21, 59, 0);
         AgentWrap sampleOLETSController = new AgentWrap("olets", "tracks.singlePlayer.advanced.olets.Agent");
         AgentWrap repeatOLETS = new AgentWrap("repeatOLETS", "tracks.singlePlayer.tools.repeatOLETS.Agent");
-        //endregion
+    //endregion
+    //GECCO 2016 agents
+        AgentWrap MaastCTS = new AgentWrap("MaastCTS", "MaastCTS.Agent", 1, 127, 109, 2);
+    //endregion
 
-        profile.addAgent(sampleMCTSController);
+        profile.addAgent(MaastCTS);
         profile.addAgent(sampleOLMCTSController);
         profile.addAgent(sampleGAController);
     }
