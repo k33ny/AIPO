@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/agents/agents.iml" filepath="$PROJECT_DIR$/agents/agents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aipo.iml" filepath="$PROJECT_DIR$/aipo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gvgai/gvgai.iml" filepath="$PROJECT_DIR$/gvgai/gvgai.iml" />
+    </modules>
+  </component>
+</project>

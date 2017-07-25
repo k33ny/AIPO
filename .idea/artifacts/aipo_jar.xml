@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="aipo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/aipo_jar</output-path>
+    <root id="archive" name="aipo.jar">
+      <element id="module-output" name="aipo" />
+      <element id="module-output" name="gvgai" />
+      <element id="module-output" name="agents" />
+    </root>
+  </artifact>
+</component>
