@@ -102,12 +102,13 @@ public class TestEvolution
         if(populationSize != null) profile.populationSize = populationSize;
         if(individualFittingTrials != null) profile.individualFittingTrials = individualFittingTrials;
         if(agentEvaluationTrials != null) profile.agentEvaluationTrials = agentEvaluationTrials;
+        if(iterateThroughLevels != null) profile.iterateThroughLevels = iterateThroughLevels;
         if(showVisuals != null) profile.showVisuals = showVisuals;
     }
     private static void parseArguments(String[] args)
     {
         String defaultValueCmd = "d";
-        //args{trials[0], populationSize[1] individualFittingTrials[2], agentEvaluationTrials[3], game[4], showVisuals[5]}
+        //args{trials[0], populationSize[1] individualFittingTrials[2], agentEvaluationTrials[3], game[4], iterateThroughLevels[5], showVisuals[6]}
         if((args.length > 0) && (!args[0].equals(defaultValueCmd))) trials = Integer.parseInt(args[0]);
         if((args.length > 1) && (!args[1].equals(defaultValueCmd))) populationSize = Integer.parseInt(args[1]);
         if((args.length > 2) && (!args[2].equals(defaultValueCmd))) individualFittingTrials = Integer.parseInt(args[2]);

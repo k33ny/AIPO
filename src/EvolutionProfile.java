@@ -20,7 +20,7 @@ public abstract class EvolutionProfile implements Fittable
     public int populationSize = 20;
     public double survivalRatio = 0.8;  //what percentage of the population survives
     public double crossoverRatio = 0.5; //how many genes to crossover
-    public double mutationRate = 0.2;   //chance to mutate
+    public double mutationRate = 0.02;   //chance to mutate
 
     public int agentEvaluationTrials = 200;
     public int individualFittingTrials = 3;
