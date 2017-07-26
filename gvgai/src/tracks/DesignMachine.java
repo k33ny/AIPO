@@ -183,7 +183,8 @@ public class DesignMachine {
                 }
 
                 // Get the score for the result.
-                return toPlay.handleResult();
+                toPlay.handleResult();
+                return toPlay.getFullResult();
 			}
 		}
 
@@ -274,7 +275,8 @@ public class DesignMachine {
                 }
 
                 // Get the score for the result.
-                return toPlay.handleResult();
+                toPlay.handleResult();
+                return toPlay.getFullResult();
             }
         }
 

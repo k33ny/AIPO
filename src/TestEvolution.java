@@ -6,7 +6,7 @@ import core.competition.CompetitionParameters;
  */
 public class TestEvolution
 {
-    public static final String VERSION = "2.2.0";
+    public static final String VERSION = "2.2.1";
 
     public static Integer trials = null;
     public static Integer populationSize = null;
@@ -14,7 +14,7 @@ public class TestEvolution
     public static Integer agentEvaluationTrials = null;
     public static String game = "aliens";
     public static Boolean iterateThroughLevels = null;
-    public static Boolean showVisuals = true;
+    public static Boolean showVisuals = null;
 
     public static void main(String[] args)
     {
@@ -113,7 +113,7 @@ public class TestEvolution
         if((args.length > 2) && (!args[2].equals(defaultValueCmd))) individualFittingTrials = Integer.parseInt(args[2]);
         if((args.length > 3) && (!args[3].equals(defaultValueCmd))) agentEvaluationTrials = Integer.parseInt(args[3]);
         if((args.length > 4) && (!args[4].equals(defaultValueCmd))) game = args[4];
-        if((args.length > 4) && (!args[5].equals(defaultValueCmd))) iterateThroughLevels = Boolean.parseBoolean(args[5]);
-        if((args.length > 5) && (!args[6].equals(defaultValueCmd))) showVisuals = Boolean.parseBoolean(args[6]);
+        if((args.length > 5) && (!args[5].equals(defaultValueCmd))) iterateThroughLevels = Boolean.parseBoolean(args[5]);
+        if((args.length > 6) && (!args[6].equals(defaultValueCmd))) showVisuals = Boolean.parseBoolean(args[6]);
     }
 }

@@ -120,7 +120,8 @@ private void Log(String str) {log.log(str);}
                 avgFitness += population.getIndividual(i).getFitness();
             avgFitness = Double.valueOf(dFormat.format(avgFitness/population.size()));
             report.append("Generation " + generation + ": " + population + "\n");
-            report.append("Average fitness: " + avgFitness + "\n\n");
+            report.append("Average fitness: " + avgFitness + "\n");
+            report.append("Top Individual: " + population.getIndividual(0) + "; Fitness: " + population.getIndividual(0).getFitness() + "\n\n");
             elite = population.getIndividual(0).clone();
             survivors.add(elite);
 
