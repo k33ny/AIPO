@@ -28,23 +28,40 @@ public class TestEvolution
             public String goal()
             {
                 StringBuilder sb = new StringBuilder();
-                sb.append("Positive player skill reflection.\n" +
-                          "    Evolution tries to minimise the error between the measured performance and target performance.\n" +
-                          "    Target performance is estimated using predetermined path strength modifiers.\n" +
-                          "    Agent Strength = result[1] + (CompetitionParameters.MAX_TIMESTEPS - result[2])*result[0];\n" +
-                          "    Individual Fitness function:\n" +
-                          "        double topPerf = getAgent(0).strength;\n" +
-                          "        double[] agentError = new double[results.length];\n" +
-                          "        for (int i = 0; i < results.length; i++)\n" +
-                          "        {\n" +
-                          "           double[] result = results[i];\n" +
-                          "           double performance = result[1] + (CompetitionParameters.MAX_TIMESTEPS - result[2])*result[0];\n" +
-                          "            double targetPerformance = topPerf*getAgent(i).strength;\n" +
-                          "            agentError[i] = Math.abs(targetPerformance - performance);\n" +
-                          "        }\n" +
-                          "        double fitness = 0;\n" +
-                          "        for(double error : agentError) fitness -= error;\n" +
-                          "        return fitness;");
+                sb.append("Positive skill reflection.\nFitness functions:\n" +
+                        "            @Override\n" +
+                        "            public double fit(double[] result) //result[outcome]\n" +
+                        "            {\n" +
+                        "                double performance = result[1] + (CompetitionParameters.MAX_TIMESTEPS - result[2])*result[0];\n" +
+                        "                return performance;\n" +
+                        "            }\n\n" +
+                        "            @Override\n" +
+                        "            public double fit(double[][] results) //results[simulation][outcome]\n" +
+                        "            {\n" +
+                        "                double averagePerformance = 0;\n" +
+                        "                for (int sim = 0; sim < results.length; sim++)\n" +
+                        "                    averagePerformance += fit(results[sim]);\n" +
+                        "                averagePerformance = averagePerformance/results.length;\n" +
+                        "                return averagePerformance;\n" +
+                        "            }\n\n" +
+                        "            @Override\n" +
+                        "            public double fit(double[][][] results) //results[agent][simulation][outcome]\n" +
+                        "            {\n" +
+                        "                double averageAgentPerformances[] = new double[results.length];\n" +
+                        "                for (int agent = 0; agent < results.length; agent++)\n" +
+                        "                    averageAgentPerformances[agent] = fit(results[agent]);\n" +
+                        "\n" +
+                        "                double[] agentError = new double[results.length];\n" +
+                        "                double fitness = 0;\n" +
+                        "                for (int agent = 0; agent < results.length; agent++)\n" +
+                        "                {\n" +
+                        "                    double performance = averageAgentPerformances[agent];\n" +
+                        "                    double targetPerformance = averageAgentPerformances[0] * getAgent(agent).strength;\n" +
+                        "                    agentError[agent] = Math.abs(targetPerformance - performance);\n" +
+                        "                    fitness -= agentError[agent];\n" +
+                        "                }\n" +
+                        "                return fitness;\n" +
+                        "            }");
                 return sb.toString();
             }
             @Override
