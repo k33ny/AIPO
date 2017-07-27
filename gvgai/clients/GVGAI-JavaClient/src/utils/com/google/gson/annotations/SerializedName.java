@@ -16,8 +16,6 @@
 
 package utils.com.google.gson.annotations;
 
-import java.lang.annotation.*;
-
 /**
  * An annotation that indicates this member should be serialized to JSON with
  * the provided name value as its field name.

@@ -28,7 +28,6 @@ import utils.com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
-import java.util.*;
 
 /**
  * Type adapter that reflects over the fields and methods of a class.

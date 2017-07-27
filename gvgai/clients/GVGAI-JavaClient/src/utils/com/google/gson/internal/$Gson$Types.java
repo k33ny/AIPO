@@ -17,8 +17,6 @@
 package utils.com.google.gson.internal;
 
 import java.io.Serializable;
-import java.lang.reflect.*;
-import java.util.*;
 
 import static utils.com.google.gson.internal.$Gson$Preconditions.checkArgument;
 import static utils.com.google.gson.internal.$Gson$Preconditions.checkNotNull;

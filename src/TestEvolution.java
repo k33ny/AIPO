@@ -1,12 +1,14 @@
-import MaastCTS.Agent;
 import core.competition.CompetitionParameters;
+import tracks.DesignMachine;
+
+import java.util.Random;
 
 /**
  * Created by mpetus on 18/07/2017.
  */
 public class TestEvolution
 {
-    public static final String VERSION = "2.2.1";
+    public static final String VERSION = "2.3.0";
 
     public static Integer trials = null;
     public static Integer populationSize = null;
@@ -46,24 +48,36 @@ public class TestEvolution
                 return sb.toString();
             }
             @Override
-            public double fit(double[] result)
+            public double fit(double[] result) //result[outcome]
             {
-                return result[1] + (CompetitionParameters.MAX_TIMESTEPS - result[2])*result[0];
+                double performance = result[1] + (CompetitionParameters.MAX_TIMESTEPS - result[2])*result[0];
+                return performance;
             }
             @Override
-            public double fit(double[][] results)
+            public double fit(double[][] results) //results[simulation][outcome]
             {
-                double topPerf = getAgent(0).strength;
+                double averagePerformance = 0;
+                for (int sim = 0; sim < results.length; sim++)
+                    averagePerformance += fit(results[sim]);
+                averagePerformance = averagePerformance/results.length;
+                return averagePerformance;
+            }
+            @Override
+            public double fit(double[][][] results) //results[agent][simulation][outcome]
+            {
+                double averageAgentPerformances[] = new double[results.length];
+                for (int agent = 0; agent < results.length; agent++)
+                    averageAgentPerformances[agent] = fit(results[agent]);
+
                 double[] agentError = new double[results.length];
-                for (int i = 0; i < results.length; i++)
-                {
-                    double[] result = results[i];
-                    double performance = result[1] + (CompetitionParameters.MAX_TIMESTEPS - result[2])*result[0];
-                    double targetPerformance = topPerf*getAgent(i).strength;
-                    agentError[i] = Math.abs(targetPerformance - performance);
-                }
                 double fitness = 0;
-                for(double error : agentError) fitness -= error;
+                for (int agent = 0; agent < results.length; agent++)
+                {
+                    double performance = averageAgentPerformances[agent];
+                    double targetPerformance = averageAgentPerformances[0] * getAgent(agent).strength;
+                    agentError[agent] = Math.abs(targetPerformance - performance);
+                    fitness -= agentError[agent];
+                }
                 return fitness;
             }
         };
@@ -76,25 +90,13 @@ public class TestEvolution
 
     private static void addAgents(EvolutionProfile profile)
     {
-//region Available agents
-    //region Sample agents
-        AgentWrap sampleRandomController = new AgentWrap("sampleRandom", "tracks.singlePlayer.simple.sampleRandom.Agent", 0, 0, 15, 0);
-        AgentWrap doNothingController = new AgentWrap("doNothing", "tracks.singlePlayer.simple.doNothing.Agent");
-        AgentWrap sampleOneStepController = new AgentWrap("sampleonesteplookahead", "tracks.singlePlayer.simple.sampleonesteplookahead.Agent", 21, 4, 21, 0);
-        AgentWrap sampleMCTSController = new AgentWrap("sampleMCTS", "tracks.singlePlayer.deprecated.sampleMCTS.Agent", 16, 25, 51, 0);
-        AgentWrap sampleFlatMCTSController = new AgentWrap("greedyTreeSearch", "tracks.singlePlayer.simple.greedyTreeSearch.Agent");
-        AgentWrap sampleOLMCTSController = new AgentWrap("sampleMCTS", "tracks.singlePlayer.advanced.sampleMCTS.Agent", 14, 28, 51, 0);
-        AgentWrap sampleGAController = new AgentWrap("sampleGA", "tracks.singlePlayer.deprecated.sampleGA.Agent", 17, 21, 59, 0);
-        AgentWrap sampleOLETSController = new AgentWrap("olets", "tracks.singlePlayer.advanced.olets.Agent");
-        AgentWrap repeatOLETS = new AgentWrap("repeatOLETS", "tracks.singlePlayer.tools.repeatOLETS.Agent");
-    //endregion
-    //GECCO 2016 agents
-        AgentWrap MaastCTS = new AgentWrap("MaastCTS", "MaastCTS.Agent", 1, 127, 109, 2);
-    //endregion
-
-        profile.addAgent(MaastCTS);
-        profile.addAgent(sampleOLMCTSController);
-        profile.addAgent(sampleGAController);
+        if(game.equals("aliens")) profile.addAgent(AgentManager.adrienctx);
+        if(game.equals("seaquest")) profile.addAgent(AgentManager.Number27);
+        profile.addAgent(AgentManager.muzzle);
+        profile.addAgent(AgentManager.thorbjrn);
+        System.out.println("Selected Agents:");
+        for(AgentWrap agent : profile.getAgents()) System.out.println(agent);
+        System.out.println();
     }
     private static void applyParameters(EvolutionProfile profile)
     {
@@ -108,13 +110,13 @@ public class TestEvolution
     private static void parseArguments(String[] args)
     {
         String defaultValueCmd = "d";
-        //args{trials[0], populationSize[1] individualFittingTrials[2], agentEvaluationTrials[3], game[4], iterateThroughLevels[5], showVisuals[6]}
-        if((args.length > 0) && (!args[0].equals(defaultValueCmd))) trials = Integer.parseInt(args[0]);
-        if((args.length > 1) && (!args[1].equals(defaultValueCmd))) populationSize = Integer.parseInt(args[1]);
-        if((args.length > 2) && (!args[2].equals(defaultValueCmd))) individualFittingTrials = Integer.parseInt(args[2]);
-        if((args.length > 3) && (!args[3].equals(defaultValueCmd))) agentEvaluationTrials = Integer.parseInt(args[3]);
-        if((args.length > 4) && (!args[4].equals(defaultValueCmd))) game = args[4];
-        if((args.length > 5) && (!args[5].equals(defaultValueCmd))) iterateThroughLevels = Boolean.parseBoolean(args[5]);
-        if((args.length > 6) && (!args[6].equals(defaultValueCmd))) showVisuals = Boolean.parseBoolean(args[6]);
+        //args{game[0], trials[1], populationSize[2] individualFittingTrials[3], agentEvaluationTrials[4], iterateThroughLevels[5], showVisuals[6]}
+        if((args.length > 0) && (!args[0].toLowerCase().equals(defaultValueCmd))) game = args[0];
+        if((args.length > 1) && (!args[1].toLowerCase().equals(defaultValueCmd))) trials = Integer.parseInt(args[1]);
+        if((args.length > 2) && (!args[2].toLowerCase().equals(defaultValueCmd))) populationSize = Integer.parseInt(args[2]);
+        if((args.length > 3) && (!args[3].toLowerCase().equals(defaultValueCmd))) individualFittingTrials = Integer.parseInt(args[3]);
+        if((args.length > 4) && (!args[4].toLowerCase().equals(defaultValueCmd))) agentEvaluationTrials = Integer.parseInt(args[4]);
+        if((args.length > 5) && (!args[5].toLowerCase().equals(defaultValueCmd))) iterateThroughLevels = Boolean.parseBoolean(args[5]);
+        if((args.length > 6) && (!args[6].toLowerCase().equals(defaultValueCmd))) showVisuals = Boolean.parseBoolean(args[6]);
     }
 }

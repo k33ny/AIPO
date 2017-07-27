@@ -16,8 +16,6 @@
 
 package utils.com.google.gson.annotations;
 
-import java.lang.annotation.*;
-
 /**
  * An annotation that indicates the version number since a member or a type has been present.
  * This annotation is useful to manage versioning of your Json classes for a web-service.

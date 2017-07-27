@@ -16,8 +16,6 @@
 
 package utils.com.google.gson.annotations;
 
-import java.lang.annotation.*;
-
 /**
  * An annotation that indicates this member should be exposed for JSON
  * serialization or deserialization.

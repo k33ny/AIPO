@@ -16,8 +16,6 @@
 
 package utils.com.google.gson.annotations;
 
-import java.lang.annotation.*;
-
 /**
  * An annotation that indicates the version number until a member or a type should be present.
  * Basically, if Gson is created with a version number that exceeds the value stored in the

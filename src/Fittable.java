@@ -16,5 +16,12 @@ public interface Fittable
      * @return
      */
     double fit(double[][] result);
+
+    /**
+     * Fits multiple simulations, possibly run with different agents.
+     * @param result the outcomes of the simulations. result[path]{isWin[0:1], score, ticks}
+     * @return
+     */
+    double fit(double[][][] result);
     String goal();
 }

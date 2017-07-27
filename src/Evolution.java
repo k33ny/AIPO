@@ -329,20 +329,12 @@ private void Log(String str) {log.log(str);}
         }
         protected double fit()
         {
-            double results[][] = new double[PROFILE.getAgents().size()][3];
+            double results[][][] = new double[PROFILE.getAgents().size()][PROFILE.individualFittingTrials][3];
 
-            for (int a = 0; a < PROFILE.getAgents().size(); a++)
-            {
-                double result[] = new double[3];
-                for (int r = 0; r < result.length; r++) result[r] = 0;
-                for (int s = 0; s < PROFILE.individualFittingTrials; s++)
-                {
-                    double[] tRez = runSimulation(GENES, validateLevel(s), PROFILE.getAgent(a));
-                    for (int r = 0; r < result.length; r++) result[r] += tRez[r];
-                }
-                for (int r = 0; r < result.length; r++) result[r] = result[r]/PROFILE.individualFittingTrials;
-                results[a] = result;
-            }
+            for (int agent = 0; agent < PROFILE.getAgents().size(); agent++)
+                for (int simulation = 0; simulation < PROFILE.individualFittingTrials; simulation++)
+                    results[agent][simulation] = runSimulation(GENES, validateLevel(simulation), PROFILE.getAgent(agent));
+
             setFitness(PROFILE.fit(results));
             return fitness;
         }

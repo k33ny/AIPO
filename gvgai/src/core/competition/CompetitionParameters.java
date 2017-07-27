@@ -22,7 +22,7 @@ public class CompetitionParameters
     /**
      * Milliseconds allowed for controller initialization.
      */
-    public static final int INITIALIZATION_TIME = 1000;
+    public static final int INITIALIZATION_TIME = 1000*5;
 
     /**
      * Milliseconds allowed for controller tear down.
