@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by mpetus on 18/07/2017.
+ * Created by Martynas Petuska on 18/07/2017.
  */
 public class LogWriter
 {
